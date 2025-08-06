@@ -1,0 +1,23 @@
+# Ignore backend folder
+../backend/
+
+# Ignore development files
+*.log
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Ignore test files
+**/*.test.js
+**/*.test.jsx
+**/*.spec.js
+**/*.spec.jsx
+
+# Ignore documentation
+README.md
+DEPLOYMENT.md
+
+# Ignore IDE files
+.vscode/
+.idea/ 
