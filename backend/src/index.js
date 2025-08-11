@@ -59,11 +59,33 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/watch-and
 .then(() => console.log('Connected to MongoDB'))
 .catch(err => console.error('MongoDB connection error:', err));
 
+// Helper function to get the correct callback URL
+const getCallbackURL = () => {
+  if (process.env.NODE_ENV === 'production') {
+    // In production, use the BACKEND_URL environment variable
+    const backendUrl = process.env.BACKEND_URL;
+    if (backendUrl) {
+      const callbackUrl = `${backendUrl}/auth/google/callback`;
+      console.log('🔗 Using callback URL:', callbackUrl);
+      return callbackUrl;
+    }
+    // Fallback for Render (you should set BACKEND_URL in your environment variables)
+    console.warn('⚠️ BACKEND_URL not set, using fallback URL. Please set BACKEND_URL in your environment variables.');
+    const fallbackUrl = 'https://watchandearn-e53r.onrender.com/auth/google/callback';
+    console.log('🔗 Using fallback callback URL:', fallbackUrl);
+    return fallbackUrl;
+  }
+  // Development
+  const devUrl = 'http://localhost:5000/auth/google/callback';
+  console.log('🔗 Using development callback URL:', devUrl);
+  return devUrl;
+};
+
 // Configure Passport with Google Strategy
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: "/auth/google/callback"
+  callbackURL: getCallbackURL()
 }, async function(accessToken, refreshToken, profile, done) {
   try {
     // Check if user already exists
@@ -147,7 +169,14 @@ app.get('/auth/logout', (req, res) => {
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'OK', message: 'Watch and Earn API is running' });
+  res.json({ 
+    status: 'OK', 
+    message: 'Watch and Earn API is running',
+    environment: process.env.NODE_ENV,
+    callbackUrl: getCallbackURL(),
+    backendUrl: process.env.BACKEND_URL,
+    frontendUrl: process.env.FRONTEND_URL
+  });
 });
 
 // Error handling middleware
