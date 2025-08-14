@@ -1,25 +1,44 @@
 import axios from 'axios';
 
+// Ensure HTTPS in production
+const getBaseURL = () => {
+  const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+  
+  // Force HTTPS in production
+  if (process.env.NODE_ENV === 'production' && !apiUrl.startsWith('https://')) {
+    console.warn('⚠️ API URL should use HTTPS in production. Current URL:', apiUrl);
+  }
+  
+  return apiUrl;
+};
+
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5000',
+  baseURL: getBaseURL(),
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
   },
+  // Ensure credentials are sent with requests
+  withCredentials: true,
 });
 
-// Log the base URL for debugging
-console.log('API Base URL:', api.defaults.baseURL);
+// Log the base URL for debugging (only in development)
+if (process.env.NODE_ENV === 'development') {
+  console.log('API Base URL:', api.defaults.baseURL);
+}
 
 // Request interceptor
 api.interceptors.request.use(
   (config) => {
-    console.log('API Request:', {
-      method: config.method,
-      url: config.url,
-      baseURL: config.baseURL,
-      fullURL: config.baseURL + config.url
-    });
+    // Only log in development
+    if (process.env.NODE_ENV === 'development') {
+      console.log('API Request:', {
+        method: config.method,
+        url: config.url,
+        baseURL: config.baseURL,
+        fullURL: config.baseURL + config.url
+      });
+    }
     
     // Add auth token if available
     const token = localStorage.getItem('token');
@@ -37,11 +56,14 @@ api.interceptors.request.use(
 // Response interceptor
 api.interceptors.response.use(
   (response) => {
-    console.log('API Response:', {
-      status: response.status,
-      url: response.config.url,
-      data: response.data
-    });
+    // Only log in development
+    if (process.env.NODE_ENV === 'development') {
+      console.log('API Response:', {
+        status: response.status,
+        url: response.config.url,
+        data: response.data
+      });
+    }
     return response;
   },
   (error) => {
@@ -78,26 +100,13 @@ export const authAPI = {
   updateProfile: (profileData) => api.put('/api/auth/profile', profileData),
   changePassword: (passwordData) => api.put('/api/auth/change-password', passwordData),
   forgotPassword: (email) => api.post('/api/auth/forgot-password', { email }),
-  resetPassword: (resetData) => api.post('/api/auth/reset-password', resetData),
 };
 
 export const videosAPI = {
   getAll: (params) => api.get('/api/videos', { params }),
-  getFeatured: () => api.get('/api/videos/featured'),
-  getById: (id) => api.get(`/api/videos/${id}`),
-  watch: (id, watchData) => api.post(`/api/videos/${id}/watch`, watchData),
-  getWatchHistory: (params) => api.get('/api/videos/history/watched', { params }),
-  getCategories: () => api.get('/api/videos/categories/list'),
-  getTrending: () => api.get('/api/videos/trending/list'),
 };
 
 export const rewardsAPI = {
-  getStats: () => api.get('/api/rewards/stats'),
-  getHistory: (params) => api.get('/api/rewards/history', { params }),
-  withdraw: (withdrawalData) => api.post('/api/rewards/withdraw', withdrawalData),
-  getWithdrawals: (params) => api.get('/api/rewards/withdrawals', { params }),
-  getWithdrawalMethods: () => api.get('/api/rewards/withdrawal-methods'),
-  getReferrals: () => api.get('/api/rewards/referrals'),
   getDailyChart: (params) => api.get('/api/rewards/chart/daily', { params }),
 };
 

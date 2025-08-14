@@ -19,11 +19,40 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Security middleware
-app.use(helmet());
-app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
-  credentials: true
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      scriptSrc: ["'self'"],
+      imgSrc: ["'self'", "data:", "https:"],
+    },
+  },
 }));
+
+// CORS configuration for production
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    const allowedOrigins = [
+      process.env.FRONTEND_URL,
+      'https://www.example.com',
+      'https://example.com'
+    ].filter(Boolean);
+    
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
 
 // Session middleware
 app.use(session({
@@ -32,7 +61,9 @@ app.use(session({
   saveUninitialized: false,
   cookie: {
     secure: process.env.NODE_ENV === 'production',
-    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+    sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax'
   }
 }));
 
@@ -42,8 +73,13 @@ app.use(passport.session());
 
 // Rate limiting
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100 // limit each IP to 100 requests per windowMs
+  windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS) || 15 * 60 * 1000, // 15 minutes
+  max: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS) || 100, // limit each IP to 100 requests per windowMs
+  message: {
+    error: 'Too many requests from this IP, please try again later.'
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
 });
 app.use(limiter);
 
@@ -62,18 +98,14 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/watch-and
 // Helper function to get the correct callback URL
 const getCallbackURL = () => {
   if (process.env.NODE_ENV === 'production') {
-    // In production, use the BACKEND_URL environment variable
     const backendUrl = process.env.BACKEND_URL;
     if (backendUrl) {
       const callbackUrl = `${backendUrl}/auth/google/callback`;
-      console.log('🔗 Using callback URL:', callbackUrl);
+      console.log('🔗 Using production callback URL:', callbackUrl);
       return callbackUrl;
     }
-    // Fallback for Render (you should set BACKEND_URL in your environment variables)
-    console.warn('⚠️ BACKEND_URL not set, using fallback URL. Please set BACKEND_URL in your environment variables.');
-    const fallbackUrl = 'https://watchandearn-e53r.onrender.com/auth/google/callback';
-    console.log('🔗 Using fallback callback URL:', fallbackUrl);
-    return fallbackUrl;
+    console.warn('⚠️ BACKEND_URL not set in production. Please set BACKEND_URL in your environment variables.');
+    return 'https://api.example.com/auth/google/callback';
   }
   // Development
   const devUrl = 'http://localhost:5000/auth/google/callback';
@@ -173,19 +205,27 @@ app.get('/api/health', (req, res) => {
     status: 'OK', 
     message: 'Watch and Earn API is running',
     environment: process.env.NODE_ENV,
-    callbackUrl: getCallbackURL(),
-    backendUrl: process.env.BACKEND_URL,
-    frontendUrl: process.env.FRONTEND_URL
+    timestamp: new Date().toISOString()
   });
 });
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ 
-    error: 'Something went wrong!',
-    message: process.env.NODE_ENV === 'development' ? err.message : 'Internal server error'
-  });
+  console.error('Error:', err.message);
+  
+  // Don't leak stack traces in production
+  if (process.env.NODE_ENV === 'production') {
+    res.status(500).json({ 
+      error: 'Internal server error',
+      message: 'Something went wrong on our end. Please try again later.'
+    });
+  } else {
+    res.status(500).json({ 
+      error: 'Something went wrong!',
+      message: err.message,
+      stack: err.stack
+    });
+  }
 });
 
 // 404 handler
@@ -194,8 +234,10 @@ app.use('*', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`🔗 Frontend URL: ${process.env.FRONTEND_URL || 'http://localhost:3000'}`);
+  console.log(`🔗 Backend URL: ${process.env.BACKEND_URL || 'http://localhost:5000'}`);
 });
 
 module.exports = app; 

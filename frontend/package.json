@@ -31,6 +31,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "CI=false GENERATE_SOURCEMAP=false react-scripts build",
+    "build:prod": "NODE_ENV=production CI=false GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "postinstall": "chmod +x node_modules/.bin/* || true"
@@ -56,6 +57,5 @@
   "devDependencies": {
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7"
-  },
-  "proxy": "http://localhost:5000"
+  }
 }

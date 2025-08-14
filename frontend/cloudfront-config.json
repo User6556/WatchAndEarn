@@ -1,0 +1,92 @@
+{
+  "DistributionConfig": {
+    "CallerReference": "watch-and-earn-frontend",
+    "Comment": "Watch and Earn Frontend Distribution",
+    "DefaultRootObject": "index.html",
+    "Origins": {
+      "Quantity": 1,
+      "Items": [
+        {
+          "Id": "S3-watch-and_earn_frontend",
+          "DomainName": "watch-and-earn-frontend.s3.amazonaws.com",
+          "S3OriginConfig": {
+            "OriginAccessIdentity": ""
+          }
+        }
+      ]
+    },
+    "DefaultCacheBehavior": {
+      "TargetOriginId": "S3-watch-and_earn_frontend",
+      "ViewerProtocolPolicy": "redirect-to-https",
+      "TrustedSigners": {
+        "Enabled": false,
+        "Quantity": 0
+      },
+      "ForwardedValues": {
+        "QueryString": false,
+        "Cookies": {
+          "Forward": "none"
+        }
+      },
+      "MinTTL": 0,
+      "DefaultTTL": 86400,
+      "MaxTTL": 31536000
+    },
+    "CacheBehaviors": {
+      "Quantity": 1,
+      "Items": [
+        {
+          "PathPattern": "/*",
+          "TargetOriginId": "S3-watch-and_earn_frontend",
+          "ViewerProtocolPolicy": "redirect-to-https",
+          "TrustedSigners": {
+            "Enabled": false,
+            "Quantity": 0
+          },
+          "ForwardedValues": {
+            "QueryString": false,
+            "Cookies": {
+              "Forward": "none"
+            }
+          },
+          "MinTTL": 0,
+          "DefaultTTL": 0,
+          "MaxTTL": 0,
+          "Compress": true
+        }
+      ]
+    },
+    "CustomErrorResponses": {
+      "Quantity": 1,
+      "Items": [
+        {
+          "ErrorCode": 404,
+          "ResponsePagePath": "/index.html",
+          "ResponseCode": "200",
+          "ErrorCachingMinTTL": 0
+        }
+      ]
+    },
+    "Enabled": true,
+    "PriceClass": "PriceClass_100",
+    "HttpVersion": "http2",
+    "DefaultCacheBehavior": {
+      "TargetOriginId": "S3-watch-and_earn_frontend",
+      "ViewerProtocolPolicy": "redirect-to-https",
+      "TrustedSigners": {
+        "Enabled": false,
+        "Quantity": 0
+      },
+      "ForwardedValues": {
+        "QueryString": false,
+        "Cookies": {
+          "Forward": "none"
+        }
+      },
+      "MinTTL": 0,
+      "DefaultTTL": 86400,
+      "MaxTTL": 31536000,
+      "Compress": true
+    }
+  }
+}
