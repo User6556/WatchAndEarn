@@ -97,19 +97,26 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/watch-and
 
 // Helper function to get the correct callback URL
 const getCallbackURL = () => {
+  // First, check if GOOGLE_REDIRECT_URL is explicitly set
+  if (process.env.GOOGLE_REDIRECT_URL) {
+    console.log('🔗 Using GOOGLE_REDIRECT_URL:', process.env.GOOGLE_REDIRECT_URL);
+    return process.env.GOOGLE_REDIRECT_URL;
+  }
+  
+  // Fallback to the old logic for backward compatibility
   if (process.env.NODE_ENV === 'production') {
     const backendUrl = process.env.BACKEND_URL;
     if (backendUrl) {
       const callbackUrl = `${backendUrl}/auth/google/callback`;
-      console.log('🔗 Using production callback URL:', callbackUrl);
+      console.log('🔗 Using production callback URL (fallback):', callbackUrl);
       return callbackUrl;
     }
-    console.warn('⚠️ BACKEND_URL not set in production. Please set BACKEND_URL in your environment variables.');
+    console.warn('⚠️ Neither GOOGLE_REDIRECT_URL nor BACKEND_URL set in production. Please set GOOGLE_REDIRECT_URL in your environment variables.');
     return 'https://api.example.com/auth/google/callback';
   }
   // Development
   const devUrl = 'http://localhost:5000/auth/google/callback';
-  console.log('🔗 Using development callback URL:', devUrl);
+  console.log('🔗 Using development callback URL (fallback):', devUrl);
   return devUrl;
 };
 

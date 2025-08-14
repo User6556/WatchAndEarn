@@ -90,6 +90,7 @@ REFERRAL_BONUS_REFERRED=${process.env.REFERRAL_BONUS_REFERRED || '0.50'}
 # Google OAuth Configuration
 GOOGLE_CLIENT_ID=${process.env.GOOGLE_CLIENT_ID || 'your-google-client-id'}
 GOOGLE_CLIENT_SECRET=${process.env.GOOGLE_CLIENT_SECRET || 'your-google-client-secret'}
+GOOGLE_REDIRECT_URL=${process.env.GOOGLE_REDIRECT_URL || currentConfig.callbackUrl}
 SESSION_SECRET=${process.env.SESSION_SECRET || 'your-session-secret-key-change-this-in-production'}`;
 
 console.log('📝 Generated .env content:');
@@ -128,6 +129,7 @@ console.log(`   FRONTEND_URL=${currentConfig.FRONTEND_URL}`);
 console.log('   NODE_ENV=production');
 console.log('   GOOGLE_CLIENT_ID=your-google-client-id');
 console.log('   GOOGLE_CLIENT_SECRET=your-google-client-secret');
+console.log(`   GOOGLE_REDIRECT_URL=${currentConfig.callbackUrl}`);
 
 console.log('\nFor Vercel (Frontend):');
 console.log('1. Go to your Vercel dashboard');

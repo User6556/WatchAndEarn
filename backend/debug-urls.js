@@ -9,6 +9,7 @@ console.log('Environment Variables:');
 console.log('NODE_ENV:', process.env.NODE_ENV);
 console.log('BACKEND_URL:', process.env.BACKEND_URL);
 console.log('FRONTEND_URL:', process.env.FRONTEND_URL);
+console.log('GOOGLE_REDIRECT_URL:', process.env.GOOGLE_REDIRECT_URL || '❌ Not set');
 console.log('GOOGLE_CLIENT_ID:', process.env.GOOGLE_CLIENT_ID ? '✅ Set' : '❌ Not set');
 console.log('GOOGLE_CLIENT_SECRET:', process.env.GOOGLE_CLIENT_SECRET ? '✅ Set' : '❌ Not set');
 
@@ -16,6 +17,12 @@ console.log('\n📋 OAuth Configuration:');
 
 // Helper function to get the correct callback URL (same as in index.js)
 const getCallbackURL = () => {
+  // First, check if GOOGLE_REDIRECT_URL is explicitly set
+  if (process.env.GOOGLE_REDIRECT_URL) {
+    return process.env.GOOGLE_REDIRECT_URL;
+  }
+  
+  // Fallback to the old logic for backward compatibility
   if (process.env.NODE_ENV === 'production') {
     const backendUrl = process.env.BACKEND_URL;
     if (backendUrl) {
@@ -39,4 +46,5 @@ console.log('   https://watchandearn-e53r.onrender.com');
 
 console.log('\n📝 Environment Variables to set in Render:');
 console.log('BACKEND_URL=https://watchandearn-e53r.onrender.com');
-console.log('FRONTEND_URL=https://your-actual-vercel-app-name.vercel.app'); 
+console.log('FRONTEND_URL=https://your-actual-vercel-app-name.vercel.app');
+console.log('GOOGLE_REDIRECT_URL=https://www.watchandget.shop/auth/google/callback'); 
