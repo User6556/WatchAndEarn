@@ -19,7 +19,8 @@ if [ ! -f frontend/.env ]; then
     echo "⚠️  frontend/.env file not found. Creating from example..."
     cp frontend/env.example frontend/.env
     echo "📝 Please update frontend/.env with your production values:"
-    echo "   REACT_APP_API_URL=https://api.example.com"
+    echo "   # For production: Leave REACT_APP_API_URL empty to use relative paths"
+    echo "   # For development: Set REACT_APP_API_URL=http://localhost:5000"
     echo "   Then run this script again."
     exit 1
 fi

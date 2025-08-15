@@ -1,14 +1,15 @@
 import axios from 'axios';
 
-// Ensure HTTPS in production
+// Get base URL for API calls
 const getBaseURL = () => {
-  const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
-  
-  // Force HTTPS in production
-  if (process.env.NODE_ENV === 'production' && !apiUrl.startsWith('https://')) {
-    console.warn('⚠️ API URL should use HTTPS in production. Current URL:', apiUrl);
+  // In production, use relative paths to work with CloudFront domain
+  if (process.env.NODE_ENV === 'production') {
+    // Use relative path for production - this will automatically use the current domain
+    return '';
   }
   
+  // In development, use the environment variable or default to localhost
+  const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
   return apiUrl;
 };
 

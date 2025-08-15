@@ -43,7 +43,7 @@ const HomePage = () => {
             {/* Google OAuth Button */}
             <div className="flex justify-center">
               <a 
-                href={`${process.env.REACT_APP_API_URL || 'https://api.example.com'}/auth/google`}
+                href="/auth/google"
                 className="flex items-center justify-center px-8 py-3 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
               >
                 <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24">

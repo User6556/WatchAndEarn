@@ -66,7 +66,9 @@ This guide will walk you through deploying your Watch and Earn application to AW
 2. Update `frontend/.env` with your production values:
    ```env
    # API Configuration
-   REACT_APP_API_URL=https://api.example.com
+   # For production: Leave empty to use relative paths (recommended)
+   # For development: Set to your local backend URL
+   REACT_APP_API_URL=http://localhost:5000
    
    # Environment
    NODE_ENV=production

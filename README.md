@@ -231,6 +231,8 @@ REFERRAL_BONUS_REFERRED=0.50
 
 #### Frontend (.env)
 ```env
+# For production: Leave empty to use relative paths (recommended)
+# For development: Set to your local backend URL
 REACT_APP_API_URL=http://localhost:5000
 ```
 
