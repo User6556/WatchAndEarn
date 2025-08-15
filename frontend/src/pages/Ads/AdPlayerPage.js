@@ -6,7 +6,7 @@ import AnimatedButton from '../../components/UI/AnimatedButton';
 import GlassCard from '../../components/UI/GlassCard';
 import ProgressBar from '../../components/UI/ProgressBar';
 import LoadingSpinner from '../../components/UI/LoadingSpinner';
-import { loadAdSenseScript, initializeAdSense } from '../../utils/adsense';
+import { loadPropellerAdsScript, initializePropellerAds } from '../../utils/propellerads';
 
 const AdPlayerPage = () => {
   const { id } = useParams();
@@ -28,18 +28,18 @@ const AdPlayerPage = () => {
     };
   }, [id]);
 
-  // Load Google AdSense script and initialize ads
+  // Load PropellerAds script and initialize ads
   useEffect(() => {
-    const loadAdSense = async () => {
+    const loadPropellerAds = async () => {
       try {
-        await loadAdSenseScript();
-        initializeAdSense();
+        await loadPropellerAdsScript();
+        initializePropellerAds();
       } catch (error) {
-        console.error('Failed to load AdSense:', error);
+        console.error('Failed to load PropellerAds:', error);
       }
     };
 
-    loadAdSense();
+    loadPropellerAds();
   }, []);
 
   const fetchAdDetails = async () => {
@@ -156,7 +156,7 @@ const AdPlayerPage = () => {
           <p className="text-gray-600 text-lg">{ad.description}</p>
         </div>
 
-        {/* Google AdSense Test Ad Container */}
+        {/* PropellerAds Test Ad Container */}
         <GlassCard className="bg-gradient-to-r from-gray-50 to-blue-50 mb-8">
           <div className="text-center">
             <div className="mb-6">
@@ -165,22 +165,22 @@ const AdPlayerPage = () => {
               </div>
             </div>
             <h3 className="text-xl font-medium text-gray-900 mb-3">
-              Google AdSense Test Ad
+              PropellerAds Test Ad
             </h3>
             <p className="text-gray-600 mb-6 text-lg">
-              This is a test ad container. In production, Google AdSense ads will appear here.
+              This is a test ad container. In production, PropellerAds will appear here.
             </p>
             
-            {/* Google AdSense Test Ad */}
+            {/* PropellerAds Test Ad */}
             <div className="bg-white border rounded-xl p-6 mb-6 shadow-lg">
-              <div className="text-sm text-gray-500 mb-3 font-medium">Google AdSense Test Ad:</div>
+              <div className="text-sm text-gray-500 mb-3 font-medium">PropellerAds Test Ad:</div>
               <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-4 rounded-lg border border-blue-200">
-                <ins className="adsbygoogle"
-                     style={{ display: 'block' }}
-                     data-ad-client="ca-pub-3940256099942544"
-                     data-ad-slot="1234567890"
-                     data-ad-format="auto"
-                     data-full-width-responsive="true"></ins>
+                <div id="propeller-ad-banner" 
+                     className="propeller-ad"
+                     data-zone-id="123456"
+                     data-ad-type="banner"
+                     style={{ display: 'block', textAlign: 'center', minHeight: '250px' }}>
+                </div>
               </div>
             </div>
 

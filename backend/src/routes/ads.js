@@ -10,14 +10,14 @@ router.get('/', optionalAuth, async (req, res) => {
     // Return basic ad information for tracking
     const ads = [
       {
-        id: 'adsense-test-1',
+        id: 'propeller-test-1',
         type: 'display',
         reward: 0.10,
         duration: 30, // seconds
         description: 'Watch this ad to earn rewards'
       },
       {
-        id: 'adsense-test-2', 
+        id: 'propeller-test-2', 
         type: 'display',
         reward: 0.15,
         duration: 45,
@@ -27,7 +27,7 @@ router.get('/', optionalAuth, async (req, res) => {
 
     res.json({
       ads,
-      message: 'AdSense ads are loaded dynamically'
+      message: 'PropellerAds are loaded dynamically'
     });
   } catch (error) {
     console.error('Fetch ads error:', error);
@@ -44,8 +44,8 @@ router.post('/:adId/watch', auth, async (req, res) => {
     const { adId } = req.params;
     const { watchDuration, completed } = req.body;
 
-    // Validate ad exists (in real implementation, this would check against AdSense)
-    const validAds = ['adsense-test-1', 'adsense-test-2'];
+    // Validate ad exists (in real implementation, this would check against PropellerAds)
+    const validAds = ['propeller-test-1', 'propeller-test-2'];
     if (!validAds.includes(adId)) {
       return res.status(404).json({
         error: 'Ad not found'
@@ -67,7 +67,7 @@ router.post('/:adId/watch', auth, async (req, res) => {
 
     // Calculate reward based on completion
     let rewardEarned = 0;
-    const baseReward = adId === 'adsense-test-1' ? 0.10 : 0.15;
+    const baseReward = adId === 'propeller-test-1' ? 0.10 : 0.15;
     
     if (completed && watchDuration >= 25) { // Minimum 25 seconds for full reward
       rewardEarned = baseReward;

@@ -3,6 +3,10 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Toaster } from 'react-hot-toast';
 
+// Styles
+import './utils/propellerads.css';
+import './utils/dashboard.css';
+
 // Context
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 

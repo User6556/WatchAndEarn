@@ -43,16 +43,16 @@ const PrivacyPolicy = () => {
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">3. Google AdSense</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">3. PropellerAds</h2>
               <p className="text-gray-700 mb-4">
-                Our website uses Google AdSense to display advertisements. Google AdSense uses cookies 
+                Our website uses PropellerAds to display advertisements. PropellerAds uses cookies 
                 and similar technologies to collect information about your visits to this and other websites 
                 to provide targeted advertising.
               </p>
               <p className="text-gray-700 mb-4">
                 You can opt out of personalized advertising by visiting 
-                <a href="https://www.google.com/settings/ads" className="text-blue-600 hover:underline ml-1">
-                  Google Ads Settings
+                <a href="https://propellerads.com/privacy-policy" className="text-blue-600 hover:underline ml-1">
+                  PropellerAds Privacy Policy
                 </a>.
               </p>
             </section>
@@ -67,7 +67,7 @@ const PrivacyPolicy = () => {
                 <li>Service providers who assist in our operations</li>
                 <li>Payment processors for transactions</li>
                 <li>Legal authorities when required by law</li>
-                <li>Google AdSense for advertising purposes</li>
+                <li>PropellerAds for advertising purposes</li>
               </ul>
             </section>
 

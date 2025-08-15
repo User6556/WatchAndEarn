@@ -68,7 +68,7 @@ const HomePage = () => {
             </div>
             <h3 className="text-xl font-semibold mb-2">Watch Ads</h3>
             <p className="text-gray-600">
-              Watch Google AdSense ads and start earning money immediately.
+              Watch PropellerAds and start earning money immediately.
             </p>
           </div>
           <div className="text-center">

@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import AnimatedButton from '../../components/UI/AnimatedButton';
 import GlassCard from '../../components/UI/GlassCard';
 import LoadingSpinner from '../../components/UI/LoadingSpinner';
-import { loadAdSenseScript, initializeAdSense } from '../../utils/adsense';
+import { loadPropellerAdsScript, initializePropellerAds } from '../../utils/propellerads';
 
 const AdsPage = () => {
   const navigate = useNavigate();
@@ -16,18 +16,18 @@ const AdsPage = () => {
     fetchAds();
   }, []);
 
-  // Load Google AdSense script and initialize ads
+  // Load PropellerAds script and initialize ads
   useEffect(() => {
-    const loadAdSense = async () => {
+    const loadPropellerAds = async () => {
       try {
-        await loadAdSenseScript();
-        initializeAdSense();
+        await loadPropellerAdsScript();
+        initializePropellerAds();
       } catch (error) {
-        console.error('Failed to load AdSense:', error);
+        console.error('Failed to load PropellerAds:', error);
       }
     };
 
-    loadAdSense();
+    loadPropellerAds();
   }, []);
 
   const fetchAds = async () => {
@@ -63,7 +63,7 @@ const AdsPage = () => {
           Watch Ads & Earn
         </h1>
         <p className="text-gray-600 mt-2 text-lg">
-          Watch Google AdSense ads to earn money. Each ad takes 30-45 seconds to complete and pays $3-$4.
+          Watch PropellerAds to earn money. Each ad takes 30-45 seconds to complete and pays $3-$4.
         </p>
       </GlassCard>
 
