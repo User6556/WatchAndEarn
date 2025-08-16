@@ -49,81 +49,79 @@ const AdsPage = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-64">
+      <div className="mobile-loading">
         <LoadingSpinner size="xl" />
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <div className="mobile-main-content space-y-6">
       {/* Header */}
-      <GlassCard className="bg-gradient-to-r from-blue-50 to-indigo-50">
-        <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+      <div className="text-center mb-6">
+        <h1 className="mobile-text-xl lg:text-3xl font-bold text-gray-900 mb-2">
           Watch Ads & Earn
         </h1>
-        <p className="text-gray-600 mt-2 text-lg">
+        <p className="mobile-text-base lg:text-lg text-gray-600">
           Watch PropellerAds to earn money. Each ad takes 30-45 seconds to complete and pays $3-$4.
         </p>
-      </GlassCard>
+      </div>
 
       {/* Available Ads */}
-      <GlassCard className="bg-gradient-to-r from-white to-gray-50">
-        <h2 className="text-xl font-semibold text-gray-900 mb-6 flex items-center">
-          <span className="w-2 h-8 bg-gradient-to-b from-green-500 to-blue-500 rounded-full mr-3"></span>
+      <div className="mobile-card">
+        <h2 className="mobile-text-lg lg:text-xl font-semibold text-gray-900 mb-4 text-center">
           Available Ads
         </h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="mobile-grid lg:grid lg:grid-cols-2 xl:grid-cols-3 lg:gap-6">
           {ads.map((ad) => (
-            <GlassCard key={ad.id} className="bg-gradient-to-r from-white to-blue-50 hover:from-blue-50 hover:to-indigo-50">
-              <div className="text-center mb-4">
-                <div className="w-20 h-20 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                  <Play className="w-10 h-10 text-blue-600" />
+            <div key={ad.id} className="mobile-card">
+              <div className="text-center mb-3 lg:mb-4">
+                <div className="w-16 h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center mx-auto mb-3 lg:mb-4 shadow-lg">
+                  <Play className="w-8 h-8 lg:w-10 lg:h-10 text-blue-600" />
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                <h3 className="mobile-text-lg lg:text-xl font-semibold text-gray-900">
                   Ad #{ad.id.split('-').pop()}
                 </h3>
               </div>
               
-              <div className="space-y-4 mb-6">
+              <div className="space-y-3 lg:space-y-4 mb-4 lg:mb-6">
                 <p className="text-gray-600 text-sm leading-relaxed">
                   {ad.description}
                 </p>
                 
                 <div className="flex items-center justify-between text-sm">
-                  <div className="flex items-center bg-blue-50 px-3 py-1 rounded-full">
-                    <Clock className="w-4 h-4 mr-1 text-blue-600" />
-                    <span className="text-blue-700 font-medium">{ad.duration}s</span>
+                  <div className="flex items-center bg-blue-50 px-2 lg:px-3 py-1 rounded-full">
+                    <Clock className="w-3 h-3 lg:w-4 lg:h-4 mr-1 text-blue-600" />
+                    <span className="text-blue-700 font-medium text-xs lg:text-sm">{ad.duration}s</span>
                   </div>
-                  <div className="flex items-center bg-green-50 px-3 py-1 rounded-full">
-                    <DollarSign className="w-4 h-4 mr-1 text-green-600" />
-                    <span className="text-green-700 font-medium">${ad.reward.toFixed(2)}</span>
+                  <div className="flex items-center bg-green-50 px-2 lg:px-3 py-1 rounded-full">
+                    <DollarSign className="w-3 h-3 lg:w-4 lg:h-4 mr-1 text-green-600" />
+                    <span className="text-green-700 font-medium text-xs lg:text-sm">${ad.reward.toFixed(2)}</span>
                   </div>
                 </div>
               </div>
               
-              <AnimatedButton
+              <button
                 onClick={() => handleWatchAd(ad.id)}
-                variant="primary"
-                className="w-full"
+                className="mobile-btn"
               >
                 <Play className="w-4 h-4 mr-2" />
                 Watch & Earn ${ad.reward.toFixed(2)}
-              </AnimatedButton>
-            </GlassCard>
+              </button>
+            </div>
           ))}
         </div>
 
         {ads.length === 0 && (
-          <div className="text-center py-12">
-            <div className="w-20 h-20 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
-              <Eye className="w-10 h-10 text-gray-400" />
+          <div className="text-center py-8 lg:py-12">
+            <div className="w-16 h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center mx-auto mb-4 lg:mb-6 shadow-lg">
+              <Eye className="w-8 h-8 lg:w-10 lg:h-10 text-gray-400" />
             </div>
-            <p className="text-gray-600 text-lg">No ads available at the moment. Please check back later!</p>
+            <p className="text-gray-600 mobile-text-base lg:text-lg">No ads available at the moment. Please check back later!</p>
           </div>
         )}
-      </GlassCard>
+      </div>
     </div>
   );
 };

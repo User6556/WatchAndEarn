@@ -116,9 +116,9 @@ const DashboardPage = () => {
   const recentActivity = user?.watchHistory?.slice(0, 5) || [];
 
   return (
-    <div className="space-y-8">
-      {/* Page Header */}
-      <div className="flex items-center justify-between">
+    <div className="space-y-6 lg:space-y-8">
+      {/* Page Header - Desktop Layout */}
+      <div className="hidden lg:flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">
             Dashboard
@@ -139,8 +139,45 @@ const DashboardPage = () => {
         </div>
       </div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* Page Header - Mobile Layout */}
+      <div className="lg:hidden text-center mb-6">
+        <h1 className="mobile-text-xl font-bold text-gray-900 mb-2">
+          Welcome back!
+        </h1>
+        <p className="mobile-text-base text-gray-600">
+          Here's what's happening with your account.
+        </p>
+      </div>
+
+      {/* Quick Actions - Mobile Layout (Moved to top) */}
+      <div className="lg:hidden mobile-card">
+        <h2 className="mobile-text-lg font-semibold text-gray-900 mb-4 text-center">
+          Quick Actions
+        </h2>
+        <div className="space-y-3">
+          {quickActions.map((action) => (
+            <button
+              key={action.name}
+              onClick={() => navigate(action.href)}
+              className="w-full flex items-center p-3 rounded-lg border border-gray-200 hover:border-gray-300 hover:shadow-md transition-all duration-200 group mobile-btn-secondary"
+            >
+              <div className={`p-2 rounded-lg bg-gradient-to-r ${action.gradient} mr-3`}>
+                <action.icon className="w-4 h-4 text-white" />
+              </div>
+              <div className="text-left flex-1">
+                <p className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors mobile-text-base">
+                  {action.name}
+                </p>
+                <p className="text-xs text-gray-500">{action.description}</p>
+              </div>
+              <ArrowRight className="w-3 h-3 text-gray-400 group-hover:text-blue-600 transition-colors" />
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Stats Grid - Desktop Only */}
+      <div className="hidden lg:grid lg:grid-cols-4 gap-6">
         {stats.map((stat) => (
           <div 
             key={stat.name}
@@ -182,8 +219,8 @@ const DashboardPage = () => {
         ))}
       </div>
 
-      {/* Main Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      {/* Main Content Grid - Desktop Layout */}
+      <div className="hidden lg:grid lg:grid-cols-3 gap-8">
         {/* Quick Actions */}
         <div className="lg:col-span-1">
           <div className="professional-stats-card rounded-xl p-6 professional-fade-in-left">
@@ -287,10 +324,79 @@ const DashboardPage = () => {
         </div>
       </div>
 
+      {/* Analytics Overview - Mobile Layout */}
+      <div className="lg:hidden mobile-card">
+        <h2 className="mobile-text-lg font-semibold text-gray-900 mb-4 text-center">
+          Analytics Overview
+        </h2>
+        <div className="mobile-grid">
+          {/* Weekly Earnings Chart */}
+          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-3">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="font-medium text-gray-900 mobile-text-base">Weekly Earnings</h3>
+              <TrendingUp className="w-4 h-4 text-blue-600" />
+            </div>
+            <div className="flex items-end justify-between h-16">
+              {weeklyEarnings.map((earning, index) => (
+                <div key={index} className="flex flex-col items-center">
+                  <div 
+                    className="bg-blue-500 rounded-t w-4 mb-2 transition-all duration-300 hover:bg-blue-600"
+                    style={{ height: `${(earning / 30) * 100}%` }}
+                  ></div>
+                  <span className="text-xs text-gray-500">${earning}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Monthly Stats */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
+              <div className="flex items-center">
+                <DollarSign className="w-4 h-4 text-green-600 mr-2" />
+                <div>
+                  <p className="text-xs font-medium text-gray-900">Monthly Earnings</p>
+                  <p className="mobile-text-lg font-bold text-green-600">
+                    ${monthlyStats.totalEarnings}
+                  </p>
+                </div>
+              </div>
+              <Plus className="w-3 h-3 text-green-600" />
+            </div>
+
+            <div className="flex items-center justify-between p-3 bg-purple-50 rounded-lg">
+              <div className="flex items-center">
+                <Play className="w-4 h-4 text-purple-600 mr-2" />
+                <div>
+                  <p className="text-xs font-medium text-gray-900">Ads This Month</p>
+                  <p className="mobile-text-lg font-bold text-purple-600">
+                    {monthlyStats.adsWatched}
+                  </p>
+                </div>
+              </div>
+              <Activity className="w-3 h-3 text-purple-600" />
+            </div>
+
+            <div className="flex items-center justify-between p-3 bg-orange-50 rounded-lg">
+              <div className="flex items-center">
+                <Users className="w-4 h-4 text-orange-600 mr-2" />
+                <div>
+                  <p className="text-xs font-medium text-gray-900">New Referrals</p>
+                  <p className="mobile-text-lg font-bold text-orange-600">
+                    {monthlyStats.referrals}
+                  </p>
+                </div>
+              </div>
+              <Award className="w-3 h-3 text-orange-600" />
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Recent Activity */}
-      <div className="professional-stats-card rounded-xl p-6 professional-fade-in-up">
+      <div className="professional-stats-card rounded-xl p-6 professional-fade-in-up lg:block mobile-card">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-lg font-semibold text-gray-900">Recent Activity</h2>
+          <h2 className="text-lg font-semibold text-gray-900 lg:block mobile-text-lg">Recent Activity</h2>
           <button 
             onClick={() => navigate('/rewards')}
             className="text-sm text-blue-600 hover:text-blue-700 font-medium"
@@ -338,6 +444,7 @@ const DashboardPage = () => {
                 onClick={() => navigate('/ads')}
                 variant="primary"
                 size="sm"
+                className="lg:block mobile-btn"
               >
                 Start Watching Ads
               </AnimatedButton>

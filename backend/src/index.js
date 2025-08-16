@@ -18,6 +18,9 @@ const User = require('./models/User');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Trust proxy for CloudFront/Nginx/Load Balancer
+app.set("trust proxy", 1);
+
 // Security middleware
 app.use(helmet({
   contentSecurityPolicy: {
@@ -31,28 +34,13 @@ app.use(helmet({
 }));
 
 // CORS configuration for production
-const corsOptions = {
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-    
-    const allowedOrigins = [
-      process.env.FRONTEND_URL,
-      'https://www.example.com',
-      'https://example.com'
-    ].filter(Boolean);
-    
-    if (allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true,
-  optionsSuccessStatus: 200
-};
-
-app.use(cors(corsOptions));
+app.use(cors({
+  origin: [
+    "https://www.watchandget.shop",
+    "https://watchandget.shop"
+  ],
+  credentials: true
+}));
 
 // Session middleware
 app.use(session({

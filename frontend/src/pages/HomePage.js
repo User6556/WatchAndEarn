@@ -6,13 +6,13 @@ const HomePage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       {/* Hero Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div className="mobile-main-content py-12 lg:py-20">
         <div className="text-center">
-          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+          <h1 className="mobile-text-2xl lg:text-4xl xl:text-6xl font-bold text-gray-900 mb-4 lg:mb-6">
             Watch Videos,
             <span className="text-blue-600"> Earn Money</span>
           </h1>
-          <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+          <p className="mobile-text-base lg:text-xl text-gray-600 mb-6 lg:mb-8">
             Join thousands of users who earn money by watching videos. 
             Get paid $3-$4 per ad with our secure and reliable platform.
           </p>
@@ -21,13 +21,13 @@ const HomePage = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 to="/register"
-                className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+                className="mobile-btn bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors text-center"
               >
                 Get Started
               </Link>
               <Link
                 to="/login"
-                className="border border-blue-600 text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors"
+                className="mobile-btn border border-blue-600 text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors text-center"
               >
                 Sign In
               </Link>
@@ -44,7 +44,7 @@ const HomePage = () => {
             <div className="flex justify-center">
               <a 
                 href="/auth/google"
-                className="flex items-center justify-center px-8 py-3 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+                className="mobile-btn flex items-center justify-center px-8 py-3 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
               >
                 <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24">
                   <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -60,32 +60,32 @@ const HomePage = () => {
       </div>
 
       {/* Features Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid md:grid-cols-3 gap-8">
+      <div className="mobile-main-content py-12 lg:py-16">
+        <div className="mobile-grid lg:grid lg:grid-cols-3 lg:gap-8">
           <div className="text-center">
-            <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Play className="w-8 h-8 text-blue-600" />
+            <div className="bg-blue-100 w-12 h-12 lg:w-16 lg:h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Play className="w-6 h-6 lg:w-8 lg:h-8 text-blue-600" />
             </div>
-            <h3 className="text-xl font-semibold mb-2">Watch Ads</h3>
-            <p className="text-gray-600">
+            <h3 className="mobile-text-lg lg:text-xl font-semibold mb-2">Watch Ads</h3>
+            <p className="text-gray-600 mobile-text-sm lg:text-base">
               Watch PropellerAds and start earning money immediately.
             </p>
           </div>
           <div className="text-center">
-            <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <DollarSign className="w-8 h-8 text-green-600" />
+            <div className="bg-green-100 w-12 h-12 lg:w-16 lg:h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <DollarSign className="w-6 h-6 lg:w-8 lg:h-8 text-green-600" />
             </div>
-            <h3 className="text-xl font-semibold mb-2">Earn Money</h3>
-            <p className="text-gray-600">
+            <h3 className="mobile-text-lg lg:text-xl font-semibold mb-2">Earn Money</h3>
+            <p className="text-gray-600 mobile-text-sm lg:text-base">
               Get paid $3-$4 for every ad you watch. Withdraw your earnings after 30 days.
             </p>
           </div>
           <div className="text-center">
-            <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Users className="w-8 h-8 text-purple-600" />
+            <div className="bg-purple-100 w-12 h-12 lg:w-16 lg:h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Users className="w-6 h-6 lg:w-8 lg:h-8 text-purple-600" />
             </div>
-            <h3 className="text-xl font-semibold mb-2">Refer Friends</h3>
-            <p className="text-gray-600">
+            <h3 className="mobile-text-lg lg:text-xl font-semibold mb-2">Refer Friends</h3>
+            <p className="text-gray-600 mobile-text-sm lg:text-base">
               Invite friends and earn bonus rewards for every successful referral.
             </p>
           </div>

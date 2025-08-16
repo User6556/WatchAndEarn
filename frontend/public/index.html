@@ -3,8 +3,14 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <meta name="theme-color" content="#3b82f6" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Watch & Earn" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
     <meta
       name="description"
       content="Watch ads and earn money with our platform. Join thousands of users earning rewards for watching PropellerAds."
@@ -13,8 +19,44 @@
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>Watch & Earn - Make Money Watching Ads</title>
     
+    <!-- Preconnect to external domains for better performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdn.propellerads.com" />
+    
     <!-- PropellerAds Script -->
     <script async src="https://cdn.propellerads.com/propeller.min.js"></script>
+    
+    <!-- Mobile-specific styles -->
+    <style>
+      /* Prevent zoom on input focus on iOS */
+      @media screen and (-webkit-min-device-pixel-ratio: 0) {
+        select,
+        textarea,
+        input {
+          font-size: 16px;
+        }
+      }
+      
+      /* Smooth scrolling for mobile */
+      html {
+        scroll-behavior: smooth;
+      }
+      
+      /* Prevent horizontal scroll on mobile */
+      body {
+        overflow-x: hidden;
+        width: 100%;
+      }
+      
+      /* Better touch targets for mobile */
+      @media (max-width: 768px) {
+        button, a, input, select, textarea {
+          min-height: 44px;
+          min-width: 44px;
+        }
+      }
+    </style>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
